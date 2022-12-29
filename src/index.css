@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .column-header {
+    @apply bg-white border-blue-200 border-2 p-5 text-center;
+  }
+}
