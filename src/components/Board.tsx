@@ -10,9 +10,9 @@ import {
 } from "@thisbeyond/solid-dnd";
 import { batch, createSignal, For } from "solid-js";
 import { createStore } from "solid-js/store";
-import Column from "./Column";
-import ColumnOverlay from "./ColumnOverlay";
-import SortableOverlay from "./SortableOverlay";
+import Column from "./column/Column";
+import ColumnOverlay from "./column/ColumnOverlay";
+import CardOverlay from "./card/CardOverlay";
 
 export const Board = () => {
   const [containers, setContainers] = createStore<{ [key: string]: Id[] }>({
@@ -136,33 +136,33 @@ export const Board = () => {
   };
 
   return (
-    <div class="flex flex-col flex-1 mt-5 self-stretch content-around p-2">
-      <DragDropProvider
-        onDragOver={onDragOver}
-        onDragEnd={onDragEnd}
-        collisionDetector={closestContainerOrItem}
-      >
-        <DragDropSensors />
-        <div class="flex flex-row gap-x-5 justify-center items-stretch">
-          <SortableProvider ids={containerOrder()}>
-            <For each={containerOrder()}>
-              {(key) => <Column id={key} items={containers[key]} />}
-            </For>
-          </SortableProvider>
-        </div>
-        <DragOverlay>
-          {/* @ts-ignore */}
-          {(draggable) => {
+    <DragDropProvider
+      onDragOver={onDragOver}
+      onDragEnd={onDragEnd}
+      collisionDetector={closestContainerOrItem}
+    >
+      <DragDropSensors />
+      <div class="flex flex-row gap-x-5 justify-center items-stretch">
+        <SortableProvider ids={containerOrder()}>
+          <For each={containerOrder()}>
+            {(key) => <Column id={key} items={containers[key]} />}
+          </For>
+        </SortableProvider>
+      </div>
+      <DragOverlay>
+        {
+          /* @ts-ignore */
+          (draggable) => {
             const id = draggable.id;
             return isContainer(id) ? (
               <ColumnOverlay id={id} items={containers[id]} />
             ) : (
-              <SortableOverlay item={id} />
+              <CardOverlay item={id} />
             );
-          }}
-        </DragOverlay>
-      </DragDropProvider>
-    </div>
+          }
+        }
+      </DragOverlay>
+    </DragDropProvider>
   );
 };
 

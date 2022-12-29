@@ -1,6 +1,6 @@
-import { createSortable } from "@thisbeyond/solid-dnd";
+import { createSortable, Id } from "@thisbeyond/solid-dnd";
 
-const Sortable = (props: { item: any }) => {
+const Card = (props: { item: Id }) => {
   const sortable = createSortable(props.item);
   return (
     <div
@@ -13,4 +13,4 @@ const Sortable = (props: { item: any }) => {
   );
 };
 
-export default Sortable;
+export default Card;

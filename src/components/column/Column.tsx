@@ -5,9 +5,10 @@ import {
   SortableProvider,
 } from "@thisbeyond/solid-dnd";
 import { For } from "solid-js";
-import Sortable from "./Sortable";
+import Card from "../card/Card";
+import ColumnHeader from "./ColumnHeader";
 
-const Column = (props: { id: Id; items: any[] }) => {
+const Column = (props: { id: Id; items: Id[] }) => {
   const sortable = createSortable(props.id);
   return (
     <div
@@ -16,12 +17,10 @@ const Column = (props: { id: Id; items: any[] }) => {
       classList={{ "opacity-25": sortable.isActiveDraggable }}
       class="grow"
     >
-      <div class="column-header" {...sortable.dragActivators}>
-        {props.id}
-      </div>
-      <div class="column bg-blue-100">
+      <ColumnHeader id={props.id} dragActivators={sortable.dragActivators} />
+      <div class="bg-blue-100 flex flex-col gap-y-2">
         <SortableProvider ids={props.items}>
-          <For each={props.items}>{(item) => <Sortable item={item} />}</For>
+          <For each={props.items}>{(item) => <Card item={item} />}</For>
         </SortableProvider>
       </div>
     </div>

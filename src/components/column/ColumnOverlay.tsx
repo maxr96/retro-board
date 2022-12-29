@@ -1,9 +1,8 @@
 import { Id } from "@thisbeyond/solid-dnd";
 import { For } from "solid-js";
-import SortableOverlay from "./SortableOverlay";
+import SortableOverlay from "../card/CardOverlay";
 
-const ColumnOverlay = (props: { id: Id; items: any[] }) => {
-  console.log(props);
+const ColumnOverlay = (props: { id: Id; items: Id[] }) => {
   return (
     <div class="grow">
       <div class="column-header bg-gray-100">{props.id}</div>
