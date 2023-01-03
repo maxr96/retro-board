@@ -1,14 +1,15 @@
-import { createSortable, Id } from "@thisbeyond/solid-dnd";
+import { createSortable } from "@thisbeyond/solid-dnd";
+import { BoardItem } from "../../types/BoardItem";
 
-const Card = (props: { item: Id }) => {
-  const sortable = createSortable(props.item);
+const Card = (props: { item: BoardItem }) => {
+  const sortable = createSortable(props.item.id);
   return (
     <div
       use:sortable
       class="text-center"
       classList={{ "opacity-25": sortable.isActiveDraggable }}
     >
-      {props.item}
+      {props.item.text}
     </div>
   );
 };

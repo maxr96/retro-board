@@ -1,7 +1,5 @@
-import { Id } from "@thisbeyond/solid-dnd";
-
-const CardOverlay = (props: { item: Id }) => {
-  return <div class="bg-blue-300 text-center">{props.item}</div>;
+const CardOverlay = (props: { text: string }) => {
+  return <div class="bg-blue-300 text-center">{props.text}</div>;
 };
 
 export default CardOverlay;

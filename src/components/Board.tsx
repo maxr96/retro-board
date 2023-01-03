@@ -13,24 +13,35 @@ import { createStore } from "solid-js/store";
 import Column from "./column/Column";
 import ColumnOverlay from "./column/ColumnOverlay";
 import CardOverlay from "./card/CardOverlay";
+import { BoardItem } from "../types/BoardItem";
 
 export const Board = () => {
-  const [containers, setContainers] = createStore<{ [key: string]: Id[] }>({
-    Start: [1, 2, 3],
-    Stop: [4, 5, 6],
-    Continue: [7],
+  const [containers, setContainers] = createStore<{
+    [key: string]: BoardItem[];
+  }>({
+    Start: [
+      { id: 1, text: "A team" },
+      { id: 2, text: "Be proactive" },
+      { id: 3, text: "Start typing.." },
+    ],
+    Stop: [
+      { id: 4, text: "Too much time" },
+      { id: 5, text: "Start typing..." },
+    ],
+    Continue: [
+      { id: 6, text: "Firefighting" },
+      { id: 7, text: "Start typing..." },
+    ],
   });
   // TODO: make all ids a unique string or number
   const containerIds = () => Object.keys(containers);
-  const [containerOrder, setContainerOrder] = createSignal(
-    Object.keys(containers)
-  );
+  const [containerOrder, setContainerOrder] = createSignal(containerIds());
 
   const isContainer = (id: Id) => containerIds().includes(id as string);
 
   const getContainer = (id: Id) => {
     for (const [key, items] of Object.entries(containers)) {
-      if (items.includes(id as number)) {
+      if (items.some((item) => item.id === id)) {
         return key;
       }
     }
@@ -53,7 +64,7 @@ export const Board = () => {
       const closestItem = closestCenter(
         draggable,
         droppables.filter((droppable) =>
-          containerItemIds.includes(droppable.id)
+          containerItemIds.map((it) => it.id).includes(droppable.id)
         ),
         context
       );
@@ -63,7 +74,7 @@ export const Board = () => {
 
       if (getContainer(draggable.id) !== closestContainer.id) {
         const isLastItem =
-          containerItemIds.indexOf(closestItem.id) ===
+          containerItemIds.map((it) => it.id).indexOf(closestItem.id) ===
           containerItemIds.length - 1;
 
         if (isLastItem) {
@@ -106,16 +117,19 @@ export const Board = () => {
         setContainerOrder(updatedOrder);
       } else {
         const containerItemIds = containers[droppableContainer];
-        let index = containerItemIds.indexOf(droppable.id);
+        let index = containerItemIds.map((it) => it.id).indexOf(droppable.id);
         if (index === -1) index = containerItemIds.length;
+        let item = containers[draggableContainer].find(
+          (it) => draggable.id === it.id
+        );
 
         batch(() => {
           setContainers(draggableContainer, (items) =>
-            items.filter((item) => item !== draggable.id)
+            items.filter((item) => item.id !== draggable.id)
           );
           setContainers(droppableContainer, (items) => [
             ...items.slice(0, index),
-            draggable.id,
+            item,
             ...items.slice(index),
           ]);
         });
@@ -157,7 +171,7 @@ export const Board = () => {
             return isContainer(id) ? (
               <ColumnOverlay id={id} items={containers[id]} />
             ) : (
-              <CardOverlay item={id} />
+              <CardOverlay text={id} />
             );
           }
         }
