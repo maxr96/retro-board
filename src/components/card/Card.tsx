@@ -1,7 +1,11 @@
 import { createSortable } from "@thisbeyond/solid-dnd";
 import { BoardItem } from "../../types/BoardItem";
+import InlineEdit from "./InlineEdit";
 
-const Card = (props: { item: BoardItem }) => {
+const Card = (props: {
+  item: BoardItem;
+  setItem: (item: BoardItem) => void;
+}) => {
   const sortable = createSortable(props.item.id, [props.item.text]);
   return (
     <div
@@ -9,7 +13,7 @@ const Card = (props: { item: BoardItem }) => {
       class="text-center"
       classList={{ "opacity-25": sortable.isActiveDraggable }}
     >
-      {props.item.text}
+      <InlineEdit item={props.item} setItem={props.setItem} />
     </div>
   );
 };
