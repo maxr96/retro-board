@@ -9,30 +9,12 @@ import {
   Id,
 } from "@thisbeyond/solid-dnd";
 import { batch, createSignal, For } from "solid-js";
-import { createStore } from "solid-js/store";
 import Column from "./column/Column";
 import ColumnOverlay from "./column/ColumnOverlay";
 import CardOverlay from "./card/CardOverlay";
-import { BoardItem } from "../types/BoardItem";
+import { containers, setContainers } from "../store/Containers";
 
 export const Board = () => {
-  const [containers, setContainers] = createStore<{
-    [key: string]: BoardItem[];
-  }>({
-    Start: [
-      { id: 1, text: "A team" },
-      { id: 2, text: "Be proactive" },
-      { id: 3, text: "Start typing.." },
-    ],
-    Stop: [
-      { id: 4, text: "Too much time" },
-      { id: 5, text: "Start typing..." },
-    ],
-    Continue: [
-      { id: 6, text: "Firefighting" },
-      { id: 7, text: "Start typing..." },
-    ],
-  });
   // TODO: make all ids a unique string or number
   const containerIds = () => Object.keys(containers);
   const [containerOrder, setContainerOrder] = createSignal(containerIds());
