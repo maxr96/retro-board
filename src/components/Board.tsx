@@ -50,7 +50,9 @@ export const Board = () => {
   const closestContainerOrItem = (
     draggable: Draggable,
     droppables: Droppable[],
-    context
+    context: {
+      activeDroppableId: Id | null;
+    }
   ) => {
     const closestContainer = closestCenter(
       draggable,
@@ -171,7 +173,7 @@ export const Board = () => {
             return isContainer(id) ? (
               <ColumnOverlay id={id} items={containers[id]} />
             ) : (
-              <CardOverlay text={id} />
+              <CardOverlay text={draggable.data[0]} />
             );
           }
         }
