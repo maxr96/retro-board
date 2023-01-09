@@ -12,7 +12,11 @@ import { batch, createSignal, For } from "solid-js";
 import Column from "./column/Column";
 import ColumnOverlay from "./column/ColumnOverlay";
 import CardOverlay from "./card/CardOverlay";
-import { containers, setContainers } from "../store/Containers";
+import {
+  addBoardItemAtIndex,
+  containers,
+  removeBoardItem,
+} from "../store/Containers";
 
 export const Board = () => {
   // TODO: make all ids a unique string or number
@@ -100,22 +104,16 @@ export const Board = () => {
         updatedOrder.splice(toIndex, 0, ...updatedOrder.splice(fromIndex, 1));
         setContainerOrder(updatedOrder);
       } else {
-        const containerItemIds = containers[droppableContainer];
-        let index = containerItemIds.map((it) => it.id).indexOf(droppable.id);
-        if (index === -1) index = containerItemIds.length;
+        const containerItems = containers[droppableContainer];
+        let index = containerItems.findIndex((it) => it.id === droppable.id);
+        if (index === -1) index = containerItems.length;
         let item = containers[draggableContainer].find(
           (it) => draggable.id === it.id
         );
 
         batch(() => {
-          setContainers(draggableContainer, (items) =>
-            items.filter((item) => item.id !== draggable.id)
-          );
-          setContainers(droppableContainer, (items) => [
-            ...items.slice(0, index),
-            item,
-            ...items.slice(index),
-          ]);
+          removeBoardItem(draggableContainer, draggable.id);
+          addBoardItemAtIndex(droppableContainer, item, index);
         });
       }
     }
