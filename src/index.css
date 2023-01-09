@@ -4,6 +4,6 @@
 
 @layer components {
   .column-header {
-    @apply bg-white border-blue-200 border-2 p-5 text-center rounded-t-lg text-lg font-bold;
+    @apply bg-blue-300 border-blue-200 border-2 p-5 mb-2 text-center rounded-t-lg text-lg font-bold;
   }
 }

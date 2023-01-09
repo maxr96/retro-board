@@ -34,7 +34,8 @@ const InlineEdit = (props: {
       value={props.item.text}
       onChange={onChange}
       onKeyDown={onKeyDown}
-      class="resize-none overflow-hidden min-h-1 max-h-52 bg-transparent hover:cursor-pointer hover:bg-blue-100 hover:rounded-lg p-2"
+      placeholder="Start typing..."
+      class="w-full resize-none text-center overflow-hidden min-h-1 max-h-52 bg-transparent p-2 hover:cursor-pointer hover:bg-blue-50 hover:rounded-lg focus:bg-blue-50 focus:border-blue-300 focus:rounded-lg"
     />
   );
 };

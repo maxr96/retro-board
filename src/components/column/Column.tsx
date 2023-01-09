@@ -23,7 +23,7 @@ const Column = (props: { id: Id; items: BoardItem[] }) => {
       class="grow"
     >
       <ColumnHeader id={props.id} dragActivators={sortable.dragActivators} />
-      <div class="bg-blue-200 flex flex-col gap-y-2 rounded-b-lg">
+      <div class="flex flex-col gap-y-2 rounded-b-lg">
         <SortableProvider ids={props.items.map((item) => item.id)}>
           <For each={props.items}>
             {(item) => <Card item={item} setItem={setItem} />}

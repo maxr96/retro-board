@@ -10,16 +10,16 @@ const [containers, setContainers] = createStore<{
     { id: 1, text: "A team" },
     { id: 2, text: "Be proactive" },
     { id: 4, text: "Knowldegesharing" },
-    { id: 5, text: "Start typing.." },
+    { id: 5, text: "" },
   ],
   Stop: [
     { id: 6, text: "Too much time in meetings" },
-    { id: 7, text: "Start typing..." },
+    { id: 7, text: "" },
   ],
   Continue: [
     { id: 8, text: "Firefighting" },
     { id: 9, text: "Callouts" },
-    { id: 10, text: "Start typing..." },
+    { id: 10, text: "" },
   ],
 });
 
