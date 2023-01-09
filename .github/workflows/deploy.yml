@@ -13,19 +13,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check out your repository using git
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: Use Node.js 16
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: '16'
         cache: 'pnpm'
 
     - name: Install dependencies
-      run: pnpm i
+      run: pnpm i --frozen-lockfile
 
     - name: Build Solid App
-      run: pnpm run build --if-present
+      run: pnpm run build --if-present 
 
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v1
