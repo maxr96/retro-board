@@ -19,4 +19,5 @@ export default defineConfig({
   optimizeDeps: {
     extensions: ["jsx"],
   },
+  base: "/retro-board/",
 });
